@@ -1,0 +1,4 @@
+all:
+  .settings:
+    enabled_modules:
+      - sfQuizStart

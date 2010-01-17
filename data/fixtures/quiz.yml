@@ -1,0 +1,209 @@
+Quiz:
+  Quiz01:
+    Translation:
+      it:
+        nome: Quiz su symfony
+        descrizione: >
+          Questo è un quiz utilizzato per lo sviluppo del plugin sfQuizPlugin
+          di symfony
+QuizDomande:
+  Domanda01:
+    Quiz: Quiz01
+    Translation:
+      it:
+        domanda: In symfony 1.4, qual'è l'ORM predefinito?
+    tipo_risposta: singola
+  Domanda02:
+    Quiz: Quiz01
+    Translation:
+      it:
+        domanda: Con quale versione di PHP funziona symfony 2?
+    tipo_risposta: singola
+  Domanda03:
+    Quiz: Quiz01
+    Translation:
+      it:
+        domanda: >
+          In symfony 1.4 quando si cancella una tabella di Doctrine dal file yaml e si ricostruiscono
+          le classi dei modelli, dei form e dei filtri con ./symfony doctrine:build --all le classi
+          relative alle tabelle cancellate rimangono. Come si fa ad eliminarle?
+    tipo_risposta: singola
+  Domanda04:
+    Quiz: Quiz01
+    Translation:
+      it:
+        domanda: In symfony 1.4 qual'è la convenzione per le azioni?
+    tipo_risposta: singola
+  Domanda05:
+    Quiz: Quiz01
+    Translation:
+      it:
+        domanda: Quale dei seguenti libri cartacei non è mai esistito?
+    tipo_risposta: singola
+QuizRisposte:
+  Risposta01a:
+    Translation:
+      it:
+        risposta: Propel
+        commento: No, propel era l'ORM predefinito nelle versioni precedenti alla 1.3
+    QuizDomande:  Domanda01
+    giusta: false
+  Risposta01b:
+    Translation:
+      it:
+        risposta: Doctrine
+    QuizDomande:  Domanda01
+    giusta: true
+  Risposta01c:
+    Translation:
+      it:
+        risposta: Rocks
+        commento: http://en.wikipedia.org/wiki/Rocks_%28PHP%29
+    QuizDomande:  Domanda01
+    giusta: false
+  Risposta01d:
+    Translation:
+      it:
+        risposta: Redbean
+        commento: http://en.wikipedia.org/wiki/Redbean_%28software%29
+    QuizDomande:  Domanda01
+    giusta: false
+  Risposta01e:
+    Translation:
+      it:
+        risposta:  Torpor
+        commento: http://en.wikipedia.org/wiki/Torpor_%28PHP%29
+    QuizDomande: Domanda01
+    giusta: false
+  Risposta02a:
+    QuizDomande:  Domanda02
+    giusta: false
+    Translation:
+      it:
+        risposta: PHP >= 5.0
+  Risposta02b:
+    QuizDomande:  Domanda02
+    giusta: false
+    Translation:
+      it:
+        risposta: PHP >= 5.2.4
+  Risposta02c:
+    QuizDomande:  Domanda02
+    giusta: true
+    Translation:
+      it:
+        risposta: PHP >= 5.3
+  Risposta02d:
+    QuizDomande:  Domanda02
+    giusta: false
+    Translation:
+      it:
+        risposta: PHP >= 6.0
+  Risposta02e:
+    QuizDomande:  Domanda02
+    giusta: false
+    Translation:
+      it:
+        risposta: PHP >= 4.0
+        commento: La versione 4 di PHP venne rilasciata nel 2000. Nessuna versione di symfony ha mai supportato PHP 4.x
+
+  Risposta03a:
+    QuizDomande:  Domanda03
+    giusta: false
+    Translation:
+      it:
+        risposta: L'unico modo è cancellare a mano tutte le classi rimaste orfane
+  Risposta03b:
+    QuizDomande:  Domanda03
+    giusta: false
+    Translation:
+      it:
+        risposta: ./symfony clear:cache
+  Risposta03c:
+    QuizDomande:  Domanda03
+    giusta: false
+    Translation:
+      it:
+        risposta: ./symfony clear:doctrine-classes
+  Risposta03d:
+    QuizDomande:  Domanda03
+    giusta: true
+    Translation:
+      it:
+        risposta: ./symfony doctrine:clean-model-files
+  Risposta03e:
+    QuizDomande:  Domanda03
+    giusta: false
+    Translation:
+      it:
+        risposta: ./symfony doctrine:clear-classes
+
+  Risposta04a:
+    QuizDomande:  Domanda04
+    giusta: true
+    Translation:
+      it:
+        risposta: >
+          Ogni azione è rappresentata da un metodo di una classe. 
+          La classe è il nome del modulo seguito dal suffisso Actions
+  Risposta04b:
+    QuizDomande:  Domanda04
+    giusta: false
+    Translation:
+      it:
+        risposta: >
+          Ogni azione è rappresentata da una classe. 
+          Il nome della classe associata all'azione ha il suffisso Actions
+  Risposta04c:
+    QuizDomande:  Domanda04
+    giusta: false
+    Translation:
+      it:
+        risposta: Ogni azione è rappresentata da un helper che ha come prefisso Actions
+  Risposta04d:
+    QuizDomande:  Domanda04
+    giusta: false
+    Translation:
+      it:
+        risposta: >
+          Ogni azione è rappresentata da una classe. 
+          Il nome della classe associata all'azione ha il prefisso Actions
+  Risposta04e:
+    QuizDomande:  Domanda04
+    giusta: false
+    Translation:
+      it:
+        risposta: >
+          Ogni azione è rappresentata da un metodo statico.
+          Tali metodi hanno il prefisso Actions
+
+  Risposta05a:
+    QuizDomande:  Domanda05
+    giusta: false
+    Translation:
+      it:
+        risposta: La guida di riferimento a symfony 1.2
+  Risposta05b:
+    QuizDomande:  Domanda05
+    giusta: false
+    Translation:
+      it:
+        risposta: symfony in pratica, seconda edizione. symfony 1.2 | Doctrine
+  Risposta05c:
+    QuizDomande:  Domanda05
+    giusta: false
+    Translation:
+      it:
+        risposta: Di più con symfony
+  Risposta05d:
+    QuizDomande:  Domanda05
+    giusta: false
+    Translation:
+      it:
+        risposta: The Definitive Guide to symfony
+  Risposta05e:
+    QuizDomande:  Domanda05
+    giusta: true
+    Translation:
+      it:
+        risposta: symfony for dummies

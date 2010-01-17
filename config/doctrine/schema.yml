@@ -1,0 +1,102 @@
+Quiz:
+  tableName: quiz
+  actAs:
+    I18n:
+      fields: [nome, descrizione]
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    nome:
+      type: string(50)
+      notnull: false
+    descrizione:
+      type: string(2147483647)
+      notnull: true
+QuizDomande:
+  tableName: quiz_domande
+  actAs:
+    Timestampable:
+      created:
+        name: creato_il
+        type: timestamp
+        format: Y-m-d H:i:s
+        options:
+          notnull: true
+      updated:
+        name: aggiornato_il
+        type: timestamp
+        format: Y-m-d H:i:s
+        options:
+          notnull: true
+    I18n:
+      fields: [domanda]
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    quiz_id:
+      type: integer(4)
+    domanda:
+      type: string(2147483647)
+      notnull: true
+    tipo_risposta:
+      type: enum(8)
+      values: ['singola', 'multipla']
+      default: 'singola'
+      notnull: true
+    immagine:
+      type: string(50)
+      notnull: true
+    argomenti_id: integer(1)
+  relations:
+    Quiz:
+      local: quiz_id
+      foreign: id
+      type: one
+    Argomenti:
+      local: argomenti_id
+      foreign: id
+      type: one
+QuizRisposte:
+  tableName: quiz_risposte
+  actAs:
+    Timestampable:
+      created:
+        name: creato_il
+        type: timestamp
+        format: Y-m-d H:i:s
+        options:
+          notnull: true
+      updated:
+        name: aggiornato_il
+        type: timestamp
+        format: Y-m-d H:i:s
+        options:
+          notnull: true
+    I18n:
+      fields: [risposta, commento]
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    quiz_domande_id:
+      type: integer(4)
+      default: '0'
+      notnull: true
+    risposta:
+      type: string(2147483647)
+      notnull: true
+    giusta:
+      type: boolean
+      default: false
+      notnull: true
+    commento: string(2147483647)
+  relations:
+    QuizDomande:
+      local: quiz_domande_id
+      foreign: id
+      type: one

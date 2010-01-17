@@ -1,0 +1,18 @@
+quiz:
+  url:   /quiz
+  param: { module: sfQuizStart, action: index }
+quiz-nomi-giocatori:
+  url:   /quiz/nomi-giocatori
+  param: { module: sfQuizStart, action: nomiGiocatori }
+quiz-game:
+  url:   /quiz/game
+  param: { module: sfQuizStart, action: game }
+quiz-risposta-giusta:
+  url:   /quiz/risposta-giusta
+  param: { module: sfQuizStart, action: rispostaGiusta }
+quiz-risposta-sbagliata:
+  url:   /quiz/risposta-sbagliata
+  param: { module: sfQuizStart, action: rispostaSbagliata }
+quiz-fine:
+  url:   /quiz/fine-gioco
+  param: { module: sfQuizStart, action: fineGioco }

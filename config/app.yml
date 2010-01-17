@@ -1,0 +1,3 @@
+all:
+  max_num_giocatori: 10
+  max_length_nome_giocatore: 20
