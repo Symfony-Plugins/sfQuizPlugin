@@ -83,9 +83,11 @@ class sfQuizStartActions extends sfActions
   {
     
     $this->quiz = $this->getUser()->getAttribute('quiz');
+  
    
-    if($this->quiz->numeroDomandaCorrente() + 1 >=($this->quiz->numDomPerGiocatore() * $this->quiz->numGiocatori()))
+    if($this->quiz->numeroDomandaCorrente() >($this->quiz->numDomPerGiocatore() * $this->quiz->numGiocatori()))
     {
+       
       $this->redirect('@quiz-fine');
     }
     

@@ -11,5 +11,6 @@ class NomeGiocatoreForm extends BaseForm
       'max_length' => sfConfig::get('max_length_nome_giocatore')
     )));
    
+    $this->widgetSchema->getFormFormatter()->setTranslationCatalogue('traduzioni_form');
   }
 }

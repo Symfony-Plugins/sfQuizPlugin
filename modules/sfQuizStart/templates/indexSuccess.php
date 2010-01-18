@@ -1,4 +1,4 @@
-<p>Benvenuti</p>
+<p><?php echo __('Benvenuti') ?></p>
 
 <form method="post">
 <?php echo $form['numeroGiocatori']->renderRow() ?><br />

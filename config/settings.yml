@@ -2,3 +2,4 @@ all:
   .settings:
     enabled_modules:
       - sfQuizStart
+    i18n:                   true 

@@ -282,7 +282,8 @@ class GestioneQuiz
   /**
    * Restituisce il numero della domanda corrente del giocatore
    * 
-   * @return number
+   * 
+   * @return number Numero domanda (parte da 1)
    */
   public function numeroDomandaCorrente()
   {

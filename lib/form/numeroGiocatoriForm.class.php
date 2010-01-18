@@ -37,7 +37,6 @@ class NumeroGiocatoriForm extends BaseForm
       'numeroDomandePerGiocatore' => new sfValidatorChoice(array('choices' => $numDomScelte))
     ));
     
-     $this->widgetSchema->getFormFormatter()->setTranslationCatalogue('barra_cerca_copertina_form');
-    
+     $this->widgetSchema->getFormFormatter()->setTranslationCatalogue('traduzioni_form');
   }
 }
