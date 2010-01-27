@@ -1,1 +1,1 @@
-Il gioco è terminato
+<?php echo __('The game is over')?>

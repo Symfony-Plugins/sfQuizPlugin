@@ -3,7 +3,8 @@
 <?php include_component('sfQuizStart', 'tabelloneGiocatore', array('quiz' => $quiz))?>
 </div>
 
-<h2>Domanda <?php echo $quiz->numeroDomandaCorrente() ?> per il giocatore <?php echo $quiz->nomeGiocatoreCorrente() ?>
+<h2>
+<?php echo __('Question %num% for the player %nome%', array('%num%' => $quiz->numeroDomandaCorrente(), '%nome%' => $quiz->nomeGiocatoreCorrente()))?>
 </h2>
 
 <p>

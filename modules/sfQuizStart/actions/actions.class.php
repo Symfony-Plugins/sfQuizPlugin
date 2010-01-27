@@ -13,7 +13,7 @@ class sfQuizStartActions extends sfActions
       $this->form->bind($request->getParameter('numeroGiocatori'));
       if ($this->form->isValid())
       {
-        $this->redirect('@quiz-nomi-giocatori?'.http_build_query($this->form->getValues()));
+        $this->redirect('@quiz-names-of-players?'.http_build_query($this->form->getValues()));
       }
 
     }
@@ -26,7 +26,7 @@ class sfQuizStartActions extends sfActions
    * @param sfWebRequest $request
    * @return unknown_type
    */
-  public function executeNomiGiocatori(sfWebRequest $request)
+  public function executeNamesOfPlayers(sfWebRequest $request)
   {
      
     $this->form = new NomiGiocatoriForm(null, array(
@@ -88,7 +88,7 @@ class sfQuizStartActions extends sfActions
     if($this->quiz->numeroDomandaCorrente() >($this->quiz->numDomPerGiocatore() * $this->quiz->numGiocatori()))
     {
        
-      $this->redirect('@quiz-fine-gioco');
+      $this->redirect('@quiz-end-game');
     }
 
     $domanda = $this->quiz->testoDomandaCorrente();
@@ -104,33 +104,33 @@ class sfQuizStartActions extends sfActions
       
       $this->quiz->setRispostaData($request->getParameter('risposta'));
       
-      if (!$this->quiz->turnoSuccessivo()) {$this->redirect('quiz-fine-gioco');};
+      if (!$this->quiz->turnoSuccessivo()) {$this->redirect('quiz-end-game');};
       echo 'La tua risposta è '.$request->getParameter('risposta').'. ';
 
       if ($this->quiz->rispostaGiusta($this->quiz->getChiaveDomandaCorrente(), $request->getParameter('risposta')))
       {
-        $this->redirect('@quiz-risposta-giusta');
+        $this->redirect('@quiz-correct-answer');
 
       }
       else
       {
-        $this->redirect('@quiz-risposta-sbagliata');
+        $this->redirect('@quiz-wrong-answer');
 
       }
     }
   }
 
-  public function executeRispostaGiusta(sfWebRequest $request)
+  public function executeCorrectAnswer(sfWebRequest $request)
   {
 
   }
 
-  public function executeRispostaSbagliata(sfWebRequest $request)
+  public function executeWrongAnswer(sfWebRequest $request)
   {
 
   }
 
-  public function executeFineGioco(sfWebRequest $request)
+  public function executeEndGame(sfWebRequest $request)
   {
     unset($this->quiz);
   }
