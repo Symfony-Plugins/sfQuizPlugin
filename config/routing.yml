@@ -18,7 +18,7 @@ quiz-risposta-sbagliata:
   url:   /quiz/risposta-sbagliata/:sf_culture
   param: { module: sfQuizStart, action: rispostaSbagliata }
   sf_culture: (?:it|en|fr|es)
-quiz-fine:
+quiz-fine-gioco:
   url:   /quiz/fine-gioco/:sf_culture
   param: { module: sfQuizStart, action: fineGioco }
   sf_culture: (?:it|en|fr|es)

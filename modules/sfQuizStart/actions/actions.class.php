@@ -81,16 +81,16 @@ class sfQuizStartActions extends sfActions
    */
   public function executeGame(sfWebRequest $request)
   {
-    
+
     $this->quiz = $this->getUser()->getAttribute('quiz');
-  
-   
+
+     
     if($this->quiz->numeroDomandaCorrente() >($this->quiz->numDomPerGiocatore() * $this->quiz->numGiocatori()))
     {
        
-      $this->redirect('@quiz-fine');
+      $this->redirect('@quiz-fine-gioco');
     }
-    
+
     $domanda = $this->quiz->testoDomandaCorrente();
     $this->domanda = $domanda[0]->Translation['it']->domanda;
 
@@ -100,7 +100,11 @@ class sfQuizStartActions extends sfActions
 
     if ($request->isMethod('post'))
     {
-      $this->quiz->turnoSuccessivo();
+      // Memorizzo risposta
+      
+      $this->quiz->setRispostaData($request->getParameter('risposta'));
+      
+      if (!$this->quiz->turnoSuccessivo()) {$this->redirect('quiz-fine-gioco');};
       echo 'La tua risposta è '.$request->getParameter('risposta').'. ';
 
       if ($this->quiz->rispostaGiusta($this->quiz->getChiaveDomandaCorrente(), $request->getParameter('risposta')))
@@ -125,9 +129,9 @@ class sfQuizStartActions extends sfActions
   {
 
   }
-  
+
   public function executeFineGioco(sfWebRequest $request)
   {
-
+    unset($this->quiz);
   }
 }

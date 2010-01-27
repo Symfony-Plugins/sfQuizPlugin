@@ -10,6 +10,7 @@ class GestioneQuiz
   
   /**
    * Identificativo del quiz che si sta giocando
+   * E' il riferimento al campo quiz->id
    * 
    * @var int
    */
@@ -37,7 +38,7 @@ class GestioneQuiz
   private $numDomPerGiocatore;
 
   /**
-   * Memorizza il numero array della domanda corrente
+   * Memorizza l'indice array della domanda corrente
    * 
    * @var int
    */
@@ -62,6 +63,11 @@ class GestioneQuiz
    */
   private $domande = array();
 
+  /**
+   * Difficoltà supportate nativamente dal quiz
+   * 
+   * @var array
+   */
   private $difficolta = array('difficoltaCostante', 'difficoltaCrescente', 'difficoltaMassima');
   
   /**
@@ -83,7 +89,10 @@ class GestioneQuiz
   private $risposte = array();
 
   /**
-   * Struttura: [num giocatore][num domanda] = [num risposta][id risposta]
+   * [num domanda][] = array(
+   *   'risposte_id' => $risposta->id,
+   *   'giusta' => $risposta->giusta
+   * );
    *
    * @var array
    */
@@ -217,7 +226,7 @@ class GestioneQuiz
    */
   public function setDomande()
   {
-    
+
     $domande = Doctrine::getTable('QuizDomande')->inizializzaDomandeDaFare($this->getQuiz(), $this->numGiocatori * $this->numDomPerGiocatore);
     
     foreach($domande as $domanda)
@@ -263,9 +272,38 @@ class GestioneQuiz
     
   }
  
+  public function setRispostaData($risposta, $giocatore=null, $domanda=null)
+  {
+    $giocatore =  $giocatore ? $giocatore : $this->numeroGiocatoreCorrente();
+    $domanda =  $domanda ? $domanda : $this->numeroDomandaCorrente();
+    $risposta_id = $this->risposte[$domanda][$risposta]['risposte_id'];
+    
+    $this->risposteDate[$giocatore][$domanda] = array(
+      'risposta' => $risposta,
+      'risposta_id' => $risposta_id,
+      'giusta' => $this->rispostaGiusta($domanda, $risposta)
+    );
+  }
+
+  public function getRisposteDate()
+  {
+    return $this->risposteDate;
+  }
   
+  /**
+   * @param int $num [0..$numGiocatori*numDomPerGiocatore-1]
+   * @return unknown_type
+   */
   public function setChiaveDomandaCorrente($num)
   {
+    /*
+    if ($num > ($this->numGiocatori * $this->numDomPerGiocatore) - 1)
+    {
+      $messaggio = 'Tentativo di settare come domanda corrente '.$num;
+      $messaggio .= ', un valore maggiore di '.($this->numGiocatori * $this->numDomPerGiocatore - 1);
+      throw new Exception($messaggio, 001); 
+    }
+    */
     $this->chiaveDomandaCorrente = $num;
   }
   
@@ -276,6 +314,7 @@ class GestioneQuiz
    */
   public function getChiaveDomandaCorrente()
   {
+
     return $this->chiaveDomandaCorrente;
   }
   
@@ -338,6 +377,7 @@ class GestioneQuiz
    */
   public function testoDomandaCorrente()
   { 
+    
     return $this->testoDomanda($this->getChiaveDomandaCorrente());
   }
   
@@ -379,6 +419,6 @@ class GestioneQuiz
   public function turnoSuccessivo()
   {
     $this->setChiaveDomandaCorrente($this->getChiaveDomandaCorrente()+1);
-    
+  return $this->getDomandaCorrente() < $this->numDomPerGiocatore()? true : false;
   }
 }

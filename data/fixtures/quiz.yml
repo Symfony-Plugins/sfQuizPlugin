@@ -24,6 +24,8 @@ QuizDomande:
     Translation:
       it:
         domanda: Con quale versione di PHP funziona symfony 2?
+      en:
+        domanda: With which version of PHP works symfony 2?
     tipo_risposta: singola
   Domanda03:
     Quiz: Quiz01
@@ -33,18 +35,27 @@ QuizDomande:
           In symfony 1.4 quando si cancella una tabella di Doctrine dal file yaml e si ricostruiscono
           le classi dei modelli, dei form e dei filtri con ./symfony doctrine:build --all le classi
           relative alle tabelle cancellate rimangono. Come si fa ad eliminarle?
+      en:
+        domanda: >
+          In symfony 1.4 when you erase a table of the Doctrine YAML file and rebuild the classes of
+          models, forms and filters with ./symfony doctrine:build --all the classes canceled for
+          tables remain. How do I remove them?
     tipo_risposta: singola
   Domanda04:
     Quiz: Quiz01
     Translation:
       it:
         domanda: In symfony 1.4 qual'è la convenzione per le azioni?
+      en:
+        domanda: In symfony 1.4 what is the convention for the actions?
     tipo_risposta: singola
   Domanda05:
     Quiz: Quiz01
     Translation:
       it:
         domanda: Quale dei seguenti libri cartacei non è mai esistito?
+      en:
+        domanda: Which of the following paper books never existed?
     tipo_risposta: singola
 QuizRisposte:
   Risposta01a:
@@ -54,6 +65,7 @@ QuizRisposte:
         commento: No, propel era l'ORM predefinito nelle versioni precedenti alla 1.3
       en:
         risposta: Propel
+        commento: No, propel ORM was the default in versions prior to 1.3
     QuizDomande:  Domanda01
     giusta: false
   Risposta01b:
@@ -100,11 +112,15 @@ QuizRisposte:
     Translation:
       it:
         risposta: PHP >= 5.0
+      en:
+        risposta: PHP >= 5.0
   Risposta02b:
     QuizDomande:  Domanda02
     giusta: false
     Translation:
       it:
+        risposta: PHP >= 5.2.4
+      en:
         risposta: PHP >= 5.2.4
   Risposta02c:
     QuizDomande:  Domanda02
@@ -112,11 +128,15 @@ QuizRisposte:
     Translation:
       it:
         risposta: PHP >= 5.3
+      en:
+        risposta: PHP >= 5.3
   Risposta02d:
     QuizDomande:  Domanda02
     giusta: false
     Translation:
       it:
+        risposta: PHP >= 6.0
+      en:
         risposta: PHP >= 6.0
   Risposta02e:
     QuizDomande:  Domanda02
@@ -125,18 +145,24 @@ QuizRisposte:
       it:
         risposta: PHP >= 4.0
         commento: La versione 4 di PHP venne rilasciata nel 2000. Nessuna versione di symfony ha mai supportato PHP 4.x
-
+      it:
+        risposta: PHP >= 4.0
+        commento: The version 4 of PHP was released in 2000. No version of symfony has ever supported PHP 4.x
   Risposta03a:
     QuizDomande:  Domanda03
     giusta: false
     Translation:
       it:
         risposta: L'unico modo è cancellare a mano tutte le classi rimaste orfane
+      en:
+        risposta: The only way is to manually remove all the orphan classes 
   Risposta03b:
     QuizDomande:  Domanda03
     giusta: false
     Translation:
       it:
+        risposta: ./symfony clear:cache
+      en:
         risposta: ./symfony clear:cache
   Risposta03c:
     QuizDomande:  Domanda03
@@ -144,11 +170,15 @@ QuizRisposte:
     Translation:
       it:
         risposta: ./symfony clear:doctrine-classes
+      en:
+        risposta: ./symfony clear:doctrine-classes
   Risposta03d:
     QuizDomande:  Domanda03
     giusta: true
     Translation:
       it:
+        risposta: ./symfony doctrine:clean-model-files
+      en:
         risposta: ./symfony doctrine:clean-model-files
   Risposta03e:
     QuizDomande:  Domanda03
@@ -156,7 +186,8 @@ QuizRisposte:
     Translation:
       it:
         risposta: ./symfony doctrine:clear-classes
-
+      en:
+        risposta: ./symfony doctrine:clear-classes
   Risposta04a:
     QuizDomande:  Domanda04
     giusta: true
@@ -165,6 +196,10 @@ QuizRisposte:
         risposta: >
           Ogni azione è rappresentata da un metodo di una classe. 
           La classe è il nome del modulo seguito dal suffisso Actions
+      en:
+        risposta: >
+          Each action is represented by a method of a class.
+          The class is the module name followed by the suffix Actions
   Risposta04b:
     QuizDomande:  Domanda04
     giusta: false
@@ -173,12 +208,18 @@ QuizRisposte:
         risposta: >
           Ogni azione è rappresentata da una classe. 
           Il nome della classe associata all'azione ha il suffisso Actions
+      en:
+        risposta: >
+          Each action is represented by a class.
+          The name of the associated class action has the suffix Actions
   Risposta04c:
     QuizDomande:  Domanda04
     giusta: false
     Translation:
       it:
         risposta: Ogni azione è rappresentata da un helper che ha come prefisso Actions
+      en:
+        risposta: Each action is represented by a helper who is prefixed with Actions
   Risposta04d:
     QuizDomande:  Domanda04
     giusta: false
@@ -187,6 +228,10 @@ QuizRisposte:
         risposta: >
           Ogni azione è rappresentata da una classe. 
           Il nome della classe associata all'azione ha il prefisso Actions
+      en:
+        risposta: >
+          Each action is represented by a class.
+          The name of the associated class action has the prefix Actions
   Risposta04e:
     QuizDomande:  Domanda04
     giusta: false
@@ -195,6 +240,10 @@ QuizRisposte:
         risposta: >
           Ogni azione è rappresentata da un metodo statico.
           Tali metodi hanno il prefisso Actions
+      en:
+        risposta: >
+          Each action is represented by a static method.
+          These methods have the prefix Actions
 
   Risposta05a:
     QuizDomande:  Domanda05
@@ -202,27 +251,37 @@ QuizRisposte:
     Translation:
       it:
         risposta: La guida di riferimento a symfony 1.2
+      en:
+        risposta: The symfony Reference Book
   Risposta05b:
     QuizDomande:  Domanda05
     giusta: false
     Translation:
       it:
         risposta: symfony in pratica, seconda edizione. symfony 1.2 | Doctrine
+      en:
+        risposta: Practical symfony, second edition. symfony 1.2 | Doctrine
   Risposta05c:
     QuizDomande:  Domanda05
     giusta: false
     Translation:
       it:
         risposta: Di più con symfony
+      en:
+        risposta: More with symfony
   Risposta05d:
     QuizDomande:  Domanda05
     giusta: false
     Translation:
       it:
         risposta: The Definitive Guide to symfony
+      en:
+        risposta: The Definitive Guide to symfony
   Risposta05e:
     QuizDomande:  Domanda05
     giusta: true
     Translation:
       it:
+        risposta: symfony for dummies
+      en:
         risposta: symfony for dummies

@@ -1,3 +1,8 @@
+<?php use_stylesheet('quizPlugin') ?>
+<div class="tabellone">
+<?php include_component('sfQuizStart', 'tabelloneGiocatore', array('quiz' => $quiz))?>
+</div>
+
 <h2>Domanda <?php echo $quiz->numeroDomandaCorrente() ?> per il giocatore <?php echo $quiz->nomeGiocatoreCorrente() ?>
 </h2>
 
