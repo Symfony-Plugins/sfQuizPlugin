@@ -92,11 +92,9 @@ class sfQuizStartActions extends sfActions
     }
 
     $domanda = $this->quiz->testoDomandaCorrente();
-    $this->domanda = $domanda[0]->Translation['it']->domanda;
+    $this->domanda = $domanda[0]->Translation['it']->question;
 
     $this->risposte = $this->quiz->testiRisposteCorrenti();
-
-     
 
     if ($request->isMethod('post'))
     {
@@ -105,7 +103,7 @@ class sfQuizStartActions extends sfActions
       $this->quiz->setRispostaData($request->getParameter('risposta'));
       
       if (!$this->quiz->turnoSuccessivo()) {$this->redirect('quiz-end-game');};
-      echo 'La tua risposta è '.$request->getParameter('risposta').'. ';
+     // echo __('La tua risposta è %risposta%', array('%risposta%' => $request->getParameter('risposta'))).'. ';
 
       if ($this->quiz->rispostaGiusta($this->quiz->getChiaveDomandaCorrente(), $request->getParameter('risposta')))
       {

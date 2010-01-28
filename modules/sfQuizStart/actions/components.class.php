@@ -1,7 +1,7 @@
 <?php
 class sfQuizStartComponents extends sfComponents
 {
-  public function executeTabelloneGiocatore()
+  public function executeBoardPlayer()
   {
     $this->nome = $this->quiz->nomeGiocatoreCorrente();
     $this->giocatore = $this->quiz->numeroGiocatoreCorrente()-1;

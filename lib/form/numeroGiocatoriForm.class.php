@@ -22,8 +22,8 @@ class NumeroGiocatoriForm extends BaseForm
     ));
     
     $this->widgetSchema->setLabels(array(
-      'numeroGiocatori'    => 'Numero di giocatori',
-      'numeroDomandePerGiocatore' => 'Numero delle domande da fare a ciascun giocatore'
+      'numeroGiocatori'    => 'Number of players',
+      'numeroDomandePerGiocatore' => 'Number of questions to ask each player'
     ));
     
     $this->widgetSchema['numeroGiocatori']->setAttribute('size', 3);

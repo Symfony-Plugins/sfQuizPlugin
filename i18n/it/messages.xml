@@ -9,7 +9,7 @@
         <target>Giusta</target>
       </trans-unit>     
       <trans-unit id="2">
-        <source>Wrong%</source>
+        <source>Wrong</source>
         <target>Sbagliata</target>
       </trans-unit>
       <trans-unit id="3">
@@ -30,7 +30,7 @@
       </trans-unit>
       <trans-unit id="7">
         <source>Nome giocatore %num%</source>
-        <target>Player name</target>
+        <target>Player name %num%</target>
       </trans-unit>
       <trans-unit id="8">
         <source>Answer is OK!</source>
@@ -40,7 +40,11 @@
         <source>The answer is WRONG!</source>
         <target>Risposta SBAGLIATA!</target>
       </trans-unit>
-         
+      <trans-unit id="10">
+        <source>Next question</source>
+        <target>Domanda successiva </target>
+      </trans-unit>
+        
     </body>
   </file>
 </xliff>

@@ -2,7 +2,7 @@ Quiz:
   tableName: quiz
   actAs:
     I18n:
-      fields: [nome, descrizione]
+      fields: [title, description]
   columns:
     id:
       type: integer(4)
@@ -11,27 +11,27 @@ Quiz:
     nome:
       type: string(50)
       notnull: false
-    descrizione:
+    description:
       type: string(2147483647)
       notnull: true
-QuizDomande:
-  tableName: quiz_domande
+QuizQuestions:
+  tableName: quiz_questions
   actAs:
     Timestampable:
       created:
-        name: creato_il
+        name: created_at
         type: timestamp
         format: Y-m-d H:i:s
         options:
           notnull: true
       updated:
-        name: aggiornato_il
+        name: updated_at
         type: timestamp
         format: Y-m-d H:i:s
         options:
           notnull: true
     I18n:
-      fields: [domanda]
+      fields: [question]
   columns:
     id:
       type: integer(4)
@@ -39,64 +39,64 @@ QuizDomande:
       autoincrement: true
     quiz_id:
       type: integer(4)
-    domanda:
+    question:
       type: string(2147483647)
       notnull: true
-    tipo_risposta:
+    type_response:
       type: enum(8)
-      values: ['singola', 'multipla']
-      default: 'singola'
+      values: ['single', 'multiple']
+      default: 'single'
       notnull: true
     immagine:
       type: string(50)
       notnull: true
-    argomenti_id: integer(1)
+    topics_id: integer(1)
   relations:
     Quiz:
       local: quiz_id
       foreign: id
       type: one
-    Argomenti:
-      local: argomenti_id
+    Topics:
+      local: topics_id
       foreign: id
       type: one
-QuizRisposte:
-  tableName: quiz_risposte
+QuizAnswers:
+  tableName: quiz_answers
   actAs:
     Timestampable:
       created:
-        name: creato_il
+        name: created_at
         type: timestamp
         format: Y-m-d H:i:s
         options:
           notnull: true
       updated:
-        name: aggiornato_il
+        name: updated_at
         type: timestamp
         format: Y-m-d H:i:s
         options:
           notnull: true
     I18n:
-      fields: [risposta, commento]
+      fields: [answer, comment]
   columns:
     id:
       type: integer(4)
       primary: true
       autoincrement: true
-    quiz_domande_id:
+    quiz_questions_id:
       type: integer(4)
       default: '0'
       notnull: true
-    risposta:
+    answer:
       type: string(2147483647)
       notnull: true
-    giusta:
+    correct:
       type: boolean
       default: false
       notnull: true
-    commento: string(2147483647)
+    comment: string(2147483647)
   relations:
-    QuizDomande:
-      local: quiz_domande_id
+    QuizQuestions:
+      local: quiz_questions_id
       foreign: id
       type: one

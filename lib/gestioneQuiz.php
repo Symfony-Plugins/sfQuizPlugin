@@ -227,11 +227,11 @@ class GestioneQuiz
   public function setDomande()
   {
 
-    $domande = Doctrine::getTable('QuizDomande')->inizializzaDomandeDaFare($this->getQuiz(), $this->numGiocatori * $this->numDomPerGiocatore);
+    $domande = Doctrine::getTable('QuizQuestions')->inizializzaDomandeDaFare($this->getQuiz(), $this->numGiocatori * $this->numDomPerGiocatore);
     
     foreach($domande as $domanda)
     {
-     
+
       $this->domande[] = $domanda->id;
     }
    
@@ -255,15 +255,15 @@ class GestioneQuiz
     foreach ($this->getDomande() as $d => $domanda)
     {
       
-      $risposte = Doctrine::getTable('QuizRisposte')->inizializzaRisposteDaFare($domanda, 5);
+      $risposte = Doctrine::getTable('QuizAnswers')->inizializzaRisposteDaFare($domanda, 5);
      
       
       foreach($risposte as $r => $risposta)
       {
         
         $this->risposte[$d][]= array(
- 		  'risposte_id' => $risposta->id,
- 		  'giusta' => $risposta->giusta
+ 		  'answers_id' => $risposta->id,
+ 		  'correct' => $risposta->giusta
 			);
         //echo $risposta->Translation['it']->risposta;
         
@@ -276,12 +276,12 @@ class GestioneQuiz
   {
     $giocatore =  $giocatore ? $giocatore : $this->numeroGiocatoreCorrente();
     $domanda =  $domanda ? $domanda : $this->numeroDomandaCorrente();
-    $risposta_id = $this->risposte[$domanda][$risposta]['risposte_id'];
+    $risposta_id = $this->risposte[$domanda][$risposta]['answers_id'];
     
     $this->risposteDate[$giocatore][$domanda] = array(
-      'risposta' => $risposta,
-      'risposta_id' => $risposta_id,
-      'giusta' => $this->rispostaGiusta($domanda, $risposta)
+      'answer' => $risposta,
+      'answers_id' => $risposta_id,
+      'correct' => $this->rispostaGiusta($domanda, $risposta)
     );
   }
 
@@ -367,7 +367,7 @@ class GestioneQuiz
   public function testoDomanda($dom)
   {
     $id = $this->domande[$dom];
-    return Doctrine::getTable('QuizDomande')->testoDomanda($id);
+    return Doctrine::getTable('QuizQuestions')->testoDomanda($id);
   }
   
   /**
@@ -387,10 +387,10 @@ class GestioneQuiz
     foreach($this->risposte[$dom] as $i => $risposta)
     {
      
-      $risp = Doctrine::getTable('QuizRisposte')->testoRisposta($risposta['risposte_id']);
+      $risp = Doctrine::getTable('QuizAnswers')->testoRisposta($risposta['answers_id']);
      
       $r[$i] = array(
-        'testo' => $risp[0]->Translation['it']->risposta,
+        'testo' => $risp[0]->Translation['it']->answer,
       );
 
     }
@@ -419,6 +419,7 @@ class GestioneQuiz
   public function turnoSuccessivo()
   {
     $this->setChiaveDomandaCorrente($this->getChiaveDomandaCorrente()+1);
-  return $this->getDomandaCorrente() < $this->numDomPerGiocatore()? true : false;
+    //echo $this->getChiaveDomandaCorrente() . ' - '. $this->numDomPerGiocatore();exit;
+  return $this->getChiaveDomandaCorrente() <= $this->numDomPerGiocatore()? true : false;
   }
 }

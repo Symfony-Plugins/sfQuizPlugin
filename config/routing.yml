@@ -1,24 +1,24 @@
 quiz:
-  url:   /quiz/:sf_culture
+  url:   :sf_culture/quiz
   param: { module: sfQuizStart, action: index }
   sf_culture: (?:it|en|fr|es)
 quiz-names-of-players:
-  url:   /quiz/names-of-player/:sf_culture
+  url:   :sf_culture/quiz/names-of-player
   param: { module: sfQuizStart, action: namesOfPlayers }
   sf_culture: (?:it|en|fr|es)
 quiz-game:
-  url:   /quiz/game/:sf_culture
+  url:   :sf_culture/quiz/game
   param: { module: sfQuizStart, action: game }
   sf_culture: (?:it|en|fr|es)
 quiz-correct-answer:
-  url:   /quiz/correct-answer/:sf_culture
+  url:   :sf_culture/quiz/correct-answer
   param: { module: sfQuizStart, action: correctAnswer }
   sf_culture: (?:it|en|fr|es)
 quiz-wrong-answer:
-  url:   /quiz/wrong-answer/:sf_culture
+  url:   :sf_culture/quiz/wrong-answer
   param: { module: sfQuizStart, action: wrongAnswer }
   sf_culture: (?:it|en|fr|es)
 quiz-end-game:
-  url:   /quiz/end-game/:sf_culture
+  url:   :sf_culture/quiz/end-game
   param: { module: sfQuizStart, action: endGame }
   sf_culture: (?:it|en|fr|es)

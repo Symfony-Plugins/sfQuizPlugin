@@ -1,6 +1,6 @@
 <?php use_stylesheet('quizPlugin') ?>
-<div class="tabellone">
-<?php include_component('sfQuizStart', 'tabelloneGiocatore', array('quiz' => $quiz))?>
+<div class="board">
+<?php include_component('sfQuizStart', 'boardPlayer', array('quiz' => $quiz))?>
 </div>
 
 <h2>
