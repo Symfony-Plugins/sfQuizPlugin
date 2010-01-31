@@ -9,6 +9,8 @@ class QuizManager
 {
   
   /**
+   * Id of the quiz that you are playing
+   * 
    * Identificativo del quiz che si sta giocando
    * E' il riferimento al campo quiz->id
    * 
@@ -17,6 +19,8 @@ class QuizManager
   private $quiz;
   
   /**
+   * Number of players participating in the quiz
+   * 
    * Numero dei giocatori che partecipano al quiz
    *
    * @var int
@@ -24,6 +28,8 @@ class QuizManager
   private $numPlayers;
 
   /**
+   * Player names
+   * 
    * Nomi dei giocatori
    *
    * @var array
@@ -31,6 +37,8 @@ class QuizManager
   private $nameOfPlayers = array();
 
   /**
+   * Total number of questions to ask each player
+   * 
    * Numero totale delle domande da fare a ciascun giocatore
    *
    * @var int
@@ -38,6 +46,8 @@ class QuizManager
   private $numQuestForPlayer;
 
   /**
+   * Stores the array index of current demand
+   * 
    * Memorizza l'indice array della domanda corrente
    * 
    * @var int
@@ -55,6 +65,8 @@ class QuizManager
   private $score = array();
 
   /**
+   * List of questions to ask
+   * 
    * Elenco delle domande da fare
    * Vanno da 0 a ($numQuestForPlayer * $numPlayers)
    * Struttura: [num domanda] = [domanda_id]
@@ -64,6 +76,8 @@ class QuizManager
   private $questions = array();
 
   /**
+   * Difficulty natively supported by quiz
+   * 
    * Difficoltà supportate nativamente dal quiz
    * 
    * @var array
@@ -71,6 +85,9 @@ class QuizManager
   private $difficulty = array('constantDifficulty', 'increasingDifficulty', 'maxDifficulty');
   
   /**
+   * Number of hits to display for each question
+   * if $modalitàRispostePerDomanda is set to 'fixedNumber'
+   * 
    * Numero delle risposte da visualizzare per ciascuna domanda
    * se $modalitàRispostePerDomanda è settato a 'numeroFisso'
    * 
@@ -96,9 +113,11 @@ class QuizManager
    *
    * @var array
    */
-  private $risposteDate = array();
+  private $answersGiven = array();
 
   /**
+   * Set method for quiz
+   * 
    * Metodo set per identificativo quiz
    * 
    * @param unknown_type $id
@@ -110,6 +129,8 @@ class QuizManager
   }
   
   /**
+   * Get method for quiz
+   * 
    * Metodo get per identificativo quiz
    * 
    * @return int
@@ -121,6 +142,8 @@ class QuizManager
   }
   
   /**
+   * Get / set methods for the number of players
+   * 
    * Metodo get/set per il numero dei giocatori
    *
    * @param int $num
@@ -136,6 +159,8 @@ class QuizManager
   }
   
   /**
+   * Total number of questions to be done to player
+   * 
    * Numero totale delle domande da fare per giocatore
    * 
    * @param int $num Valore da assegnare
@@ -150,6 +175,14 @@ class QuizManager
     return $this->numQuestForPlayer;
   }
   
+  /**
+   * Set method for the names of the players
+   * 
+   * Metodo set per il nome dei giocatori
+   * 
+   * @param array $nomi
+   * @return void
+   */
   public function setNameOfPlayers(array $nomi)
   {
     foreach ($nomi as $nome)
@@ -158,11 +191,27 @@ class QuizManager
     }
   }
   
+  /**
+   * Add the name of a player
+   * 
+   * Aggiunge il nome di un giocatore
+   * 
+   * @param unknown_type $nome
+   * @return unknown_type
+   */
   public function addPlayerName($nome)
   {
     $this->nameOfPlayers[] = $nome;
   }
   
+  /**
+   * Returns the name of a player
+   * 
+   * Restituisce il nome di un giocatore
+   * 
+   * @param integer $i
+   * @return string
+   */
   public function playerName($i)
   {
   
@@ -170,6 +219,8 @@ class QuizManager
   }
   
   /**
+   * Set the mode for the number of responses that display a given demand
+   * 
    * Setta la modalità relativa al numero di risposte da visualizzare
    * per una data domanda
    * 
@@ -191,8 +242,11 @@ class QuizManager
   }
   
   /**
+   * Get method to retrieve the mode for the number of responses that display a given question
+   * 
    * Metodo get per recuperare la modalità relativa al numero di risposte
    * da visualizzare per una data domanda
+   * 
    * @return string
    */
   public function getModalitaRispostePerDomanda()
@@ -272,25 +326,46 @@ class QuizManager
     
   }
  
-  public function setRispostaData($answer, $player=null, $question=null)
+  /**
+   * Save the answer
+   * 
+   * Salva la risposta data
+   * 
+   * @param integer $answer
+   * @param integer $player
+   * @param integer $question
+   * @return void
+   */
+  public function setAnswerGiven($answer, $player=null, $question=null)
   {
     $player =  $player ? $player : $this->numberCurrentPlayer();
     $question =  $question ? $question : $this->numberCurrentQuestion();
-    $answer_id = $this->answers[$question][$answer]['answers_id'];
+    $answer_id = $this->answers[$question][$question]['answers_id'];
     
-    $this->risposteDate[$giocatore][$domanda] = array(
+    $this->answersGiven[$player][$question] = array(
       'answer' => $answer,
       'answers_id' => $answer_id,
       'correct' => $this->correctAnswer($question, $answer)
     );
   }
 
-  public function getRisposteDate()
+  /**
+   * Get method for the given answers
+   * 
+   * Metodo get per le risposte fate
+   * 
+   * @return array
+   */
+  public function getAnswersGiven()
   {
-    return $this->risposteDate;
+    return $this->answersGiven;
   }
   
   /**
+   * Set method for the key to the current question
+   * 
+   * Metodo set per la chiave delle domanda corrente
+   * 
    * @param int $num [0..$numPlayers*numQuestForPlayer-1]
    * @return unknown_type
    */
@@ -308,7 +383,9 @@ class QuizManager
   }
   
   /**
-   * Restituire la chiave array
+   * Return the key array of current question
+   * 
+   * Restituire la chiave array della domanda corrente
    * 
    * @return int
    */
@@ -319,8 +396,9 @@ class QuizManager
   }
   
   /**
-   * Restituisce il numero della domanda corrente del giocatore
+   * Returns the number of the current question of the player
    * 
+   * Restituisce il numero della domanda corrente del giocatore
    * 
    * @return number Numero domanda (parte da 1)
    */
@@ -330,24 +408,28 @@ class QuizManager
   }
   
   /**
+   * Returns the number of the current player
+   * 
    * Restituisce il numero del giocatore corrente
    * 
    * @return number|number
    */
   public function numberCurrentPlayer()
   {
-    $numDomandaCorrente = $this->getKeyCurrentQuestion()+1;
-    if ($numDomandaCorrente <= $this->numPlayers())
+    $numCurrentQuestion = $this->getKeyCurrentQuestion()+1;
+    if ($numCurrentQuestion <= $this->numPlayers())
     {
-      return $numDomandaCorrente;
+      return $numCurrentQuestion;
     }
     else
     {
-      return ($numDomandaCorrente % $this->numPlayers());
+      return ($numCurrentQuestion % $this->numPlayers());
     }
   }
   
   /**
+   * Returns the name of the current player
+   * 
    * Restituisce il nome del giocatore corrente
    * 
    * @return string
@@ -359,6 +441,8 @@ class QuizManager
   }
   
   /**
+   * Returns the text of a question
+   * 
    * Restituisce il testo di una domanda
    * 
    * @param int $dom Chiave array della domanda
@@ -371,6 +455,8 @@ class QuizManager
   }
   
   /**
+   * Returns the text of the current question
+   * 
    * Restituisce il testo della domanda corrente
    * 
    * @return string
@@ -381,6 +467,14 @@ class QuizManager
     return $this->textQuestion($this->getKeyCurrentQuestion());
   }
   
+  /**
+   * Returns the responses of a given question
+   * 
+   * Restituisce le risposte di una data domanda
+   * 
+   * @param integer $dom
+   * @return array
+   */
   public function textsAnswers($dom)
   {
     
@@ -397,23 +491,38 @@ class QuizManager
     return $r;
   }
   
+  /**
+   * Returns the current question answers
+   * 
+   * Restituisce le risposte della domanda corrente
+   * 
+   * @return array
+   */
   public function textsCurrentAnswers()
   {
     return $this->textsAnswers($this->getKeyCurrentQuestion());
   }
   
+  /**
+   * Check if the answer is correct
+   * 
+   * Verifica se la risposta è corretta
+   * 
+   * @param integer $question
+   * @param integer $answer
+   * @return bool
+   */
   public function correctAnswer($question, $answer)
   {
-/*
-    echo "Cerco $domanda e $risposta. Verifica ".$this->answers[$question][$answer]['correct'];
-    echo "<pre>";
-    print_r($this->answers);
-    echo "</pre>";
-   */ 
+
     return $this->answers[$question][$answer]['correct'];
   }
   
   /**
+   * Next round
+   * 
+   * Prossimo turno
+   * 
    * @return unknown_type
    */
   public function nextRound()

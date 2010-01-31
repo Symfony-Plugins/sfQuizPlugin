@@ -6,6 +6,6 @@ class sfQuizStartComponents extends sfComponents
     $this->name = $this->quiz->nameCurrentPlayer();
     $this->player = $this->quiz->numberCurrentPlayer()-1;
     $this->totQuestions = $this->quiz->numQuestForPlayer();
-    $this->risposteDate = $this->quiz->getRisposteDate();
+    $this->answersGiven = $this->quiz->getAnswersGiven();
   }
 }

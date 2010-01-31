@@ -101,7 +101,7 @@ class sfQuizStartActions extends sfActions
     {
       // Memorizzo risposta
       
-      $this->quiz->setRispostaData($request->getParameter('answer'));
+      $this->quiz->setAnswerGiven($request->getParameter('answer'));
       
       if (!$this->quiz->nextRound()) {$this->redirect('quiz-end-game');};
      // echo __('La tua risposta è %answer%', array('%answer%' => $request->getParameter('answer'))).'. ';
