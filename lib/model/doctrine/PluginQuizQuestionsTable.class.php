@@ -25,7 +25,7 @@ class PluginQuizQuestionsTable extends Doctrine_Table
    * @param int $id
    * @return Doctrine_Collection
    */
-  public function testoDomanda($id)
+  public function textQuestion($id)
   {
     
      $q = Doctrine_Query::create()

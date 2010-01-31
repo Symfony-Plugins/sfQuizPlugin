@@ -42,7 +42,11 @@
       </trans-unit>
       <trans-unit id="10">
         <source>Next question</source>
-        <target>Domanda successiva </target>
+        <target>Domanda successiva</target>
+      </trans-unit>
+      <trans-unit id="11">
+        <source>Player %name% results</source>
+        <target>Percorso del giocatore %name%</target>
       </trans-unit>
         
     </body>

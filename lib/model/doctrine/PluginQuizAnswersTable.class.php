@@ -13,13 +13,13 @@ class PluginQuizAnswersTable extends Doctrine_Table
    * @param unknown_type $limit
    * @return Doctrine_Collection
    */
-  public function inizializzaRisposteDaFare($quiz_domande_id, $limit)
+  public function inizializzaRisposteDaFare($quiz_questions_id, $limit)
   {
 
     $q = Doctrine_Query::create()
     ->select('r.id, r.correct')
     ->from('QuizAnswers r')
-    ->where('r.quiz_answers_id = ? AND r.correct = 0', $quiz_domande_id)
+    ->where('r.quiz_questions_id = ? AND r.correct = 0', $quiz_questions_id)
     ->orderBy('RAND()')
     ;
 
@@ -27,19 +27,19 @@ class PluginQuizAnswersTable extends Doctrine_Table
     {
       $q = $q->limit($limit);
     }
-    $sbagliate =  $q->execute();
+    $wrongs =  $q->execute();
 
     $q = Doctrine_Query::create()
     ->select('r.id, r.correct')
     ->from('QuizAnswers r')
-    ->where('r.quiz_answers_id = ? AND r.correct = 1', $quiz_domande_id);
+    ->where('r.quiz_questions_id = ? AND r.correct = 1', $quiz_questions_id);
 
-    $giuste = $q->execute();
-    return $sbagliate->merge($giuste);
+    $corrects = $q->execute();
+    return $wrongs->merge($corrects);
 
   }
   
-  public function testoRisposta($id)
+  public function textAnswer($id)
   {
     $q= Doctrine_Query::create()
     ->select('r.id')

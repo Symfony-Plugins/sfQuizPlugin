@@ -18,7 +18,7 @@ QuizQuestions:
         question: In symfony 1.4, qual'è l'ORM predefinito?
       en:
         question: With symfony 1.4, what is the default ORM?
-    type_response: singola
+    type_response: single
   Question02:
     Quiz: Quiz01
     Translation:
@@ -26,7 +26,7 @@ QuizQuestions:
         question: Con quale versione di PHP funziona symfony 2?
       en:
         question: With which version of PHP works symfony 2?
-    type_response: singola
+    type_response: single
   Question03:
     Quiz: Quiz01
     Translation:
@@ -40,7 +40,7 @@ QuizQuestions:
           In symfony 1.4 when you erase a table of the Doctrine YAML file and rebuild the classes of
           models, forms and filters with ./symfony doctrine:build --all the classes canceled for
           tables remain. How do I remove them?
-    type_response: singola
+    type_response: single
   Question04:
     Quiz: Quiz01
     Translation:
@@ -48,7 +48,7 @@ QuizQuestions:
         question: In symfony 1.4 qual'è la convenzione per le azioni?
       en:
         question: In symfony 1.4 what is the convention for the actions?
-    type_response: singola
+    type_response: single
   Question05:
     Quiz: Quiz01
     Translation:
@@ -56,7 +56,7 @@ QuizQuestions:
         question: Quale dei seguenti libri cartacei non è mai esistito?
       en:
         question: Which of the following paper books never existed?
-    type_response: singola
+    type_response: single
 QuizAnswers:
   Answer01a:
     Translation:

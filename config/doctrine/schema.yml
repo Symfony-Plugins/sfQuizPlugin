@@ -50,7 +50,7 @@ QuizQuestions:
     immagine:
       type: string(50)
       notnull: true
-    topics_id: integer(1)
+    topics_id: integer(4)
   relations:
     Quiz:
       local: quiz_id
@@ -100,3 +100,10 @@ QuizAnswers:
       local: quiz_questions_id
       foreign: id
       type: one
+topics:
+  tableName: topics
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true

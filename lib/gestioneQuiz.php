@@ -5,7 +5,7 @@
  * @author Fabrizio Pucci <fabrizio.pucci.ge@gmail.com>
  *
  */
-class GestioneQuiz
+class QuizManager
 {
   
   /**
@@ -21,28 +21,28 @@ class GestioneQuiz
    *
    * @var int
    */
-  private $numGiocatori;
+  private $numPlayers;
 
   /**
    * Nomi dei giocatori
    *
    * @var array
    */
-  private $nomiGiocatori = array();
+  private $nameOfPlayers = array();
 
   /**
    * Numero totale delle domande da fare a ciascun giocatore
    *
    * @var int
    */
-  private $numDomPerGiocatore;
+  private $numQuestForPlayer;
 
   /**
    * Memorizza l'indice array della domanda corrente
    * 
    * @var int
    */
-  private $chiaveDomandaCorrente;
+  private $keyCurrentQuestion;
   
   /**
    *
@@ -52,23 +52,23 @@ class GestioneQuiz
    *
    * @var array
    */
-  private $punteggio = array();
+  private $score = array();
 
   /**
    * Elenco delle domande da fare
-   * Vanno da 0 a ($numDomPerGiocatore * $numGiocatori)
+   * Vanno da 0 a ($numQuestForPlayer * $numPlayers)
    * Struttura: [num domanda] = [domanda_id]
    *
    * @var array
    */
-  private $domande = array();
+  private $questions = array();
 
   /**
    * Difficoltà supportate nativamente dal quiz
    * 
    * @var array
    */
-  private $difficolta = array('difficoltaCostante', 'difficoltaCrescente', 'difficoltaMassima');
+  private $difficulty = array('constantDifficulty', 'increasingDifficulty', 'maxDifficulty');
   
   /**
    * Numero delle risposte da visualizzare per ciascuna domanda
@@ -76,22 +76,22 @@ class GestioneQuiz
    * 
    * @var int
    */
-  private $numRispostePerDomanda;
+  private $numAnswersForQuestion;
   
   /**
    * [num domanda][] = array(
-   *   'risposte_id' => '',
-   *   'giusta' => ''
+   *   'answers_id' => '',
+   *   'correct' => ''
    * );
    *
    * @var array
    */
-  private $risposte = array();
+  private $answers = array();
 
   /**
    * [num domanda][] = array(
-   *   'risposte_id' => $risposta->id,
-   *   'giusta' => $risposta->giusta
+   *   'answers_id' => $answer->id,
+   *   'correct' => $answer->correct
    * );
    *
    * @var array
@@ -126,13 +126,13 @@ class GestioneQuiz
    * @param int $num
    * @return void
    */
-  public function numGiocatori($num = null)
+  public function numPlayers($num = null)
   {
     if ($num != null)
     {
-      $this->numGiocatori = $num;
+      $this->numPlayers = $num;
     }
-    return $this->numGiocatori;
+    return $this->numPlayers;
   }
   
   /**
@@ -141,32 +141,32 @@ class GestioneQuiz
    * @param int $num Valore da assegnare
    * @return int
    */
-  public function numDomPerGiocatore($num = null)
+  public function numQuestForPlayer($num = null)
   {
     if ($num != null)
     {
-      $this->numDomPerGiocatore = $num;
+      $this->numQuestForPlayer = $num;
     }
-    return $this->numDomPerGiocatore;
+    return $this->numQuestForPlayer;
   }
   
-  public function setNomiGiocatori(array $nomi)
+  public function setNameOfPlayers(array $nomi)
   {
     foreach ($nomi as $nome)
     {
-      $this->nomiGiocatori[] = $nome;
+      $this->nameOfPlayers[] = $nome;
     }
   }
   
-  public function addNomeGiocatore($nome)
+  public function addPlayerName($nome)
   {
-    $this->nomiGiocatori[] = $nome;
+    $this->nameOfPlayers[] = $nome;
   }
   
-  public function nomeGiocatore($i)
+  public function playerName($i)
   {
   
-    return $this->nomiGiocatori[$i];
+    return $this->nameOfPlayers[$i];
   }
   
   /**
@@ -200,18 +200,18 @@ class GestioneQuiz
     return $this->modalitaRispostePerDomanda;
   }
   
-  public function getNumRispostePerDomanda()
+  public function getNumAnswersForQuestion()
   {
-    return $this->numRispostePerDomanda;
+    return $this->numAnswersForQuestion;
   }
   
- public function getNumRispostePerDomandaCorrente()
+ public function getNumAnswersForCurrentQuestion()
   {
-    if ($this->getModalitaRispostePerDomanda == 'difficoltaCostante')
+    if ($this->getModalitaRispostePerDomanda == 'constantDifficulty')
     {
-      return $this->numRispostePerDomanda;
+      return $this->numAnswersForQuestion;
     }
-    else if ($this->getModalitaRispostePerDomanda == 'difficoltaCrescente')
+    else if ($this->getModalitaRispostePerDomanda == 'increasingDifficulty')
     {
       // Algoritmo in base a numero domanda attuale?
     }
@@ -224,17 +224,17 @@ class GestioneQuiz
    * 
    * @return void
    */
-  public function setDomande()
+  public function setQuestions()
   {
 
-    $domande = Doctrine::getTable('QuizQuestions')->inizializzaDomandeDaFare($this->getQuiz(), $this->numGiocatori * $this->numDomPerGiocatore);
-    
-    foreach($domande as $domanda)
+    $questions = Doctrine::getTable('QuizQuestions')->inizializzaDomandeDaFare($this->getQuiz(), $this->numPlayers * $this->numQuestForPlayer);
+
+    foreach($questions as $question)
     {
 
-      $this->domande[] = $domanda->id;
+      $this->questions[] = $question->id;
     }
-   
+    
   }
   
   /**
@@ -242,28 +242,28 @@ class GestioneQuiz
    * 
    * @return array
    */
-  public function getDomande()
+  public function getQuestions()
   {
-    return $this->domande;
+    return $this->questions;
   }
   
   /**
    * @return unknown_type
    */
-  public function setRisposte()
+  public function setAnswers()
   {
-    foreach ($this->getDomande() as $d => $domanda)
+    foreach ($this->getQuestions() as $d => $question)
     {
       
-      $risposte = Doctrine::getTable('QuizAnswers')->inizializzaRisposteDaFare($domanda, 5);
+      $answers = Doctrine::getTable('QuizAnswers')->inizializzaRisposteDaFare($question, 5);
      
       
-      foreach($risposte as $r => $risposta)
+      foreach($answers as $r => $answer)
       {
         
-        $this->risposte[$d][]= array(
- 		  'answers_id' => $risposta->id,
- 		  'correct' => $risposta->giusta
+        $this->answers[$d][]= array(
+ 		  'answers_id' => $answer->id,
+ 		  'correct' => $answer->correct
 			);
         //echo $risposta->Translation['it']->risposta;
         
@@ -272,16 +272,16 @@ class GestioneQuiz
     
   }
  
-  public function setRispostaData($risposta, $giocatore=null, $domanda=null)
+  public function setRispostaData($answer, $player=null, $question=null)
   {
-    $giocatore =  $giocatore ? $giocatore : $this->numeroGiocatoreCorrente();
-    $domanda =  $domanda ? $domanda : $this->numeroDomandaCorrente();
-    $risposta_id = $this->risposte[$domanda][$risposta]['answers_id'];
+    $player =  $player ? $player : $this->numberCurrentPlayer();
+    $question =  $question ? $question : $this->numberCurrentQuestion();
+    $answer_id = $this->answers[$question][$answer]['answers_id'];
     
     $this->risposteDate[$giocatore][$domanda] = array(
-      'answer' => $risposta,
-      'answers_id' => $risposta_id,
-      'correct' => $this->rispostaGiusta($domanda, $risposta)
+      'answer' => $answer,
+      'answers_id' => $answer_id,
+      'correct' => $this->correctAnswer($question, $answer)
     );
   }
 
@@ -291,20 +291,20 @@ class GestioneQuiz
   }
   
   /**
-   * @param int $num [0..$numGiocatori*numDomPerGiocatore-1]
+   * @param int $num [0..$numPlayers*numQuestForPlayer-1]
    * @return unknown_type
    */
-  public function setChiaveDomandaCorrente($num)
+  public function setKeyCurrentQuestion($num)
   {
     /*
-    if ($num > ($this->numGiocatori * $this->numDomPerGiocatore) - 1)
+    if ($num > ($this->numPlayers * $this->numQuestForPlayer) - 1)
     {
       $messaggio = 'Tentativo di settare come domanda corrente '.$num;
-      $messaggio .= ', un valore maggiore di '.($this->numGiocatori * $this->numDomPerGiocatore - 1);
+      $messaggio .= ', un valore maggiore di '.($this->numPlayers * $this->numQuestForPlayer - 1);
       throw new Exception($messaggio, 001); 
     }
     */
-    $this->chiaveDomandaCorrente = $num;
+    $this->keyCurrentQuestion = $num;
   }
   
   /**
@@ -312,10 +312,10 @@ class GestioneQuiz
    * 
    * @return int
    */
-  public function getChiaveDomandaCorrente()
+  public function getKeyCurrentQuestion()
   {
 
-    return $this->chiaveDomandaCorrente;
+    return $this->keyCurrentQuestion;
   }
   
   /**
@@ -324,9 +324,9 @@ class GestioneQuiz
    * 
    * @return number Numero domanda (parte da 1)
    */
-  public function numeroDomandaCorrente()
+  public function numberCurrentQuestion()
   {
-    return round(($this->getChiaveDomandaCorrente()+1)/$this->numGiocatori());
+    return round(($this->getKeyCurrentQuestion()+1)/$this->numPlayers());
   }
   
   /**
@@ -334,16 +334,16 @@ class GestioneQuiz
    * 
    * @return number|number
    */
-  public function numeroGiocatoreCorrente()
+  public function numberCurrentPlayer()
   {
-    $numDomandaCorrente = $this->getChiaveDomandaCorrente()+1;
-    if ($numDomandaCorrente <= $this->numGiocatori())
+    $numDomandaCorrente = $this->getKeyCurrentQuestion()+1;
+    if ($numDomandaCorrente <= $this->numPlayers())
     {
       return $numDomandaCorrente;
     }
     else
     {
-      return ($numDomandaCorrente % $this->numGiocatori());
+      return ($numDomandaCorrente % $this->numPlayers());
     }
   }
   
@@ -352,10 +352,10 @@ class GestioneQuiz
    * 
    * @return string
    */
-  public function nomeGiocatoreCorrente()
+  public function nameCurrentPlayer()
   {
    
-    return $this->nomeGiocatore($this->numeroGiocatoreCorrente()-1);
+    return $this->playerName($this->numberCurrentPlayer()-1);
   }
   
   /**
@@ -364,10 +364,10 @@ class GestioneQuiz
    * @param int $dom Chiave array della domanda
    * @return string
    */
-  public function testoDomanda($dom)
+  public function textQuestion($dom)
   {
-    $id = $this->domande[$dom];
-    return Doctrine::getTable('QuizQuestions')->testoDomanda($id);
+    $id = $this->questions[$dom];
+    return Doctrine::getTable('QuizQuestions')->textQuestion($id);
   }
   
   /**
@@ -375,51 +375,52 @@ class GestioneQuiz
    * 
    * @return string
    */
-  public function testoDomandaCorrente()
+  public function textCurrentQuestion()
   { 
     
-    return $this->testoDomanda($this->getChiaveDomandaCorrente());
+    return $this->textQuestion($this->getKeyCurrentQuestion());
   }
   
-  public function testiRisposte($dom)
+  public function textsAnswers($dom)
   {
     
-    foreach($this->risposte[$dom] as $i => $risposta)
+    foreach($this->answers[$dom] as $i => $answer)
     {
      
-      $risp = Doctrine::getTable('QuizAnswers')->testoRisposta($risposta['answers_id']);
+      $risp = Doctrine::getTable('QuizAnswers')->textAnswer($answer['answers_id']);
      
       $r[$i] = array(
-        'testo' => $risp[0]->Translation['it']->answer,
+        'text' => $risp[0]->Translation['it']->answer,
       );
 
     }
     return $r;
   }
   
-  public function testiRisposteCorrenti()
+  public function textsCurrentAnswers()
   {
-    return $this->testiRisposte($this->getChiaveDomandaCorrente());
+    return $this->textsAnswers($this->getKeyCurrentQuestion());
   }
   
-  public function rispostaGiusta($domanda, $risposta)
+  public function correctAnswer($question, $answer)
   {
 /*
-    echo "Cerco $domanda e $risposta. Verifica ".$this->risposte[$domanda][$risposta]['giusta'];
+    echo "Cerco $domanda e $risposta. Verifica ".$this->answers[$question][$answer]['correct'];
     echo "<pre>";
-    print_r($this->risposte);
+    print_r($this->answers);
     echo "</pre>";
    */ 
-    return $this->risposte[$domanda][$risposta]['giusta'];
+    return $this->answers[$question][$answer]['correct'];
   }
   
   /**
    * @return unknown_type
    */
-  public function turnoSuccessivo()
+  public function nextRound()
   {
-    $this->setChiaveDomandaCorrente($this->getChiaveDomandaCorrente()+1);
-    //echo $this->getChiaveDomandaCorrente() . ' - '. $this->numDomPerGiocatore();exit;
-  return $this->getChiaveDomandaCorrente() <= $this->numDomPerGiocatore()? true : false;
+    
+    $this->setKeyCurrentQuestion($this->getKeyCurrentQuestion()+1);
+  
+  return $this->getKeyCurrentQuestion() <= $this->numQuestForPlayer()? true : false;
   }
 }

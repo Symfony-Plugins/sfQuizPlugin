@@ -5,12 +5,12 @@ class sfQuizStartActions extends sfActions
   public function executeIndex(sfWebRequest $request)
   {
 
-    $this->form = new NumeroGiocatoriForm();
+    $this->form = new PlayersNumberForm();
 
     if ($request->isMethod('post'))
     {
        
-      $this->form->bind($request->getParameter('numeroGiocatori'));
+      $this->form->bind($request->getParameter('playersNumber'));
       if ($this->form->isValid())
       {
         $this->redirect('@quiz-names-of-players?'.http_build_query($this->form->getValues()));
@@ -29,43 +29,43 @@ class sfQuizStartActions extends sfActions
   public function executeNamesOfPlayers(sfWebRequest $request)
   {
      
-    $this->form = new NomiGiocatoriForm(null, array(
-          'size' => $request->getParameter('numeroGiocatori')
+    $this->form = new NameOfPlayersForm(null, array(
+          'size' => $request->getParameter('playersNumber')
     ));
      
     if ($request->isMethod('post'))
     {
-      $this->form->bind($request->getParameter('newNomiGiocatoriBind'));
+      $this->form->bind($request->getParameter('newNameOfPlayersBind'));
       if ($this->form->isValid())
       {
 
-        $quiz = new GestioneQuiz();
+        $quiz = new QuizManager();
 
         // Setta il quiz
         $quiz->setQuiz(1);
 
         // Setta numero giocatori
-        $quiz->numGiocatori($request->getParameter('numeroGiocatori'));
+        $quiz->numPlayers($request->getParameter('playersNumber'));
 
         // Setta numero domande per giocatore
-        $quiz->numDomPerGiocatore($request->getParameter('numeroDomandePerGiocatore'));
+        $quiz->numQuestForPlayer($request->getParameter('numberQuestionsForPlayer'));
 
         // Setta la chiave array della domanda corrente
-        $quiz->setChiaveDomandaCorrente(0);
+        $quiz->setKeyCurrentQuestion(0);
          
         // Setta i nomi dei giocatori
 
-        $giocatori = $request->getParameter('newNomiGiocatoriBind');
-        foreach($giocatori['newNomiGiocatori'] as $giocatore)
+        $giocatori = $request->getParameter('newNameOfPlayersBind');
+        foreach($giocatori['newNameOfPlayers'] as $giocatore)
         {
-          $quiz->addNomeGiocatore($giocatore['nomeGiocatore']);
+          $quiz->addPlayerName($giocatore['playerName']);
         }
          
         // Setta le domande da fare
-        $quiz->setDomande();
+        $quiz->setQuestions();
 
         // Setta le risposte da fare
-        $quiz->setRisposte();
+        $quiz->setAnswers();
          
 
         $this->getUser()->setAttribute('quiz', $quiz);
@@ -84,28 +84,29 @@ class sfQuizStartActions extends sfActions
 
     $this->quiz = $this->getUser()->getAttribute('quiz');
 
-     
-    if($this->quiz->numeroDomandaCorrente() >($this->quiz->numDomPerGiocatore() * $this->quiz->numGiocatori()))
+    //print_r($this->quiz->getQuestions());exit;
+    
+    if($this->quiz->numberCurrentQuestion() >($this->quiz->numQuestForPlayer() * $this->quiz->numPlayers()))
     {
        
       $this->redirect('@quiz-end-game');
     }
 
-    $domanda = $this->quiz->testoDomandaCorrente();
-    $this->domanda = $domanda[0]->Translation['it']->question;
+    $question = $this->quiz->textCurrentQuestion();
+    $this->question = $question[0]->Translation['it']->question;
 
-    $this->risposte = $this->quiz->testiRisposteCorrenti();
+    $this->answers = $this->quiz->textsCurrentAnswers();
 
     if ($request->isMethod('post'))
     {
       // Memorizzo risposta
       
-      $this->quiz->setRispostaData($request->getParameter('risposta'));
+      $this->quiz->setRispostaData($request->getParameter('answer'));
       
-      if (!$this->quiz->turnoSuccessivo()) {$this->redirect('quiz-end-game');};
-     // echo __('La tua risposta è %risposta%', array('%risposta%' => $request->getParameter('risposta'))).'. ';
+      if (!$this->quiz->nextRound()) {$this->redirect('quiz-end-game');};
+     // echo __('La tua risposta è %answer%', array('%answer%' => $request->getParameter('answer'))).'. ';
 
-      if ($this->quiz->rispostaGiusta($this->quiz->getChiaveDomandaCorrente(), $request->getParameter('risposta')))
+      if ($this->quiz->correctAnswer($this->quiz->getKeyCurrentQuestion(), $request->getParameter('answer')))
       {
         $this->redirect('@quiz-correct-answer');
 

@@ -3,9 +3,9 @@ class sfQuizStartComponents extends sfComponents
 {
   public function executeBoardPlayer()
   {
-    $this->nome = $this->quiz->nomeGiocatoreCorrente();
-    $this->giocatore = $this->quiz->numeroGiocatoreCorrente()-1;
-    $this->totDomande = $this->quiz->numDomPerGiocatore();
+    $this->name = $this->quiz->nameCurrentPlayer();
+    $this->player = $this->quiz->numberCurrentPlayer()-1;
+    $this->totQuestions = $this->quiz->numQuestForPlayer();
     $this->risposteDate = $this->quiz->getRisposteDate();
   }
 }
